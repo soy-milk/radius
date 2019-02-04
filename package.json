@@ -1,0 +1,31 @@
+{
+  "name": "radius",
+  "version": "1.0.0",
+  "description": "Webapp for job searching based on location",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soy-milk/radius.git"
+  },
+  "author": "Altai Chiang, Alyson Swerdloff, Brian Hon, Jae Park",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soy-milk/radius/issues"
+  },
+  "homepage": "https://github.com/soy-milk/radius#readme",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "eslint": "^5.13.0",
+    "express": "^4.16.4",
+    "node": "^11.9.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "webpack": "^4.29.1"
+  }
+}
