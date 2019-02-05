@@ -4,6 +4,7 @@
   "description": "Webapp for job searching based on location",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon src/server/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
