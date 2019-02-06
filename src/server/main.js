@@ -26,7 +26,6 @@ app.post("/jobs", (req, res) => {
     .then(res => res.json())
     .then(json => console.log(json));
 
-
 })
 
 app.listen(4242, () => console.log('radius is LIVE on 4242 BETCHES!'))

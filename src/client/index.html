@@ -31,8 +31,8 @@
     input.addEventListener("keyup", e => {
       if (e.key === "Enter") {
         fetch("http://localhost:4242/jobs", {
-          method: 'POST', // or 'PUT'
-          body: JSON.stringify({ strings: input.value }), // data can be `string` or {object}!
+          method: 'POST',
+          body: JSON.stringify({ strings: input.value }),
           headers: {
             'Content-Type': 'application/json'
           }
