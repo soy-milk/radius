@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-// import styles from './styling/app.css';
+import styles from '../styling/app.css';
 import Map from './map';
 
 class App extends Component {
@@ -13,7 +13,8 @@ class App extends Component {
     }
     render() {
         return (
-            <div id="main">
+            <div id="main" className={styles.login}>
+                <h1>RADIUS</h1>
                 <h2>Login: </h2>
                 <form>
                     <label>Username: </label>
