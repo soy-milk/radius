@@ -24,8 +24,7 @@ class App extends Component {
                     <input type="submit" value="Submit" />
                 </form>
                 <hr></hr>
-                <h2>Jobs Near You Right Now: </h2>
-                <div id="map">
+                <div>
                     <Map />
                 </div>
             </div>
