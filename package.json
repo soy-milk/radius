@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon src/server/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "build": "webpack"
   },
   "repository": {
@@ -34,6 +35,7 @@
     "react-dom": "^16.7.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.1",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   }
 }

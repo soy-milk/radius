@@ -18,10 +18,10 @@ class App extends Component {
                 <h2>Login: </h2>
                 <form>
                     <label>Username: </label>
-                        <input type="text" name="username" value={this.state.username} />
+                    <input type="text" name="username" value={this.state.username} />
                     <label>Password: </label>
-                        <input type="text" name="password" value={this.state.password}/>
-                        <input type="submit" value="Submit" />
+                    <input type="text" name="password" value={this.state.password} />
+                    <input type="submit" value="Submit" />
                 </form>
                 <hr></hr>
                 <h2>Jobs Near You Right Now: </h2>
