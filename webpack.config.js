@@ -6,33 +6,38 @@ const htmlPlugin = new HTMLWebpackPlugin({
 })
 
 module.exports = {
-  entry: __dirname + '/src/client/index.js',
-  module: {
-    rules: [
-        { 
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-                loader: "babel-loader"
+    entry: __dirname + '/src/client/index.js',
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader'
+            },
+            {
+                test: /\.css$/,
+                loader: 'css-loader',
+                query: {
+                    modules: true,
+                    localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
             }
-        },
-        {
-            test: /\.css$/,
-            loader: 'style-loader'
-        },
-        {
-            test: /\.css$/,
-            loader: 'css-loader',
-            query: {
-                modules: true,
-                localIdentName: '[name]__[local]___[hash:base64:5]'
-            }
-        }
-    ]
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
-  },
-  plugins: [htmlPlugin]
+        ]
+    },
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'build')
+    },
+    plugins: [htmlPlugin],
+    devServer: {
+        contentBase: path.resolve(__dirname, '.'),
+        port: 3000,
+        open: true,
+    },
 };
