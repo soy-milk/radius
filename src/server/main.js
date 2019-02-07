@@ -4,10 +4,11 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const db = require("./database");
 const fetch = require('node-fetch');
+const path = require ('path');
 
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
-  res.sendFile("/Users/woojaepark/Desktop/radius/src/client/index.html")
+  res.sendFile(path.join(__dirname, "../client/index.html"))
 });
 
 app.use(express.static('build'))

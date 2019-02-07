@@ -9,8 +9,8 @@ class Map extends Component {
         this.state = {
             city: null,
             jobObj: null,
-            lat: null,
-            lng: null,
+            lat: 40.7128,
+            lng: -74.0060,
         }
         this.handleChange = this.handleChange.bind(this);
         this.makeFetch = this.makeFetch.bind(this);
@@ -53,7 +53,6 @@ class Map extends Component {
                     <input id="jobs" type="text" name="city" onChange={this.handleChange} value={this.state.city} />
                     <input type="submit" value="Submit" onClick={this.makeFetch} />
                 </form>
-                <h1>MAP COMPONENT</h1>
                 <MapContainer lat={this.state.lat} lng={this.state.lng} jobObj={this.state.jobObj} />
             </div>
         )
