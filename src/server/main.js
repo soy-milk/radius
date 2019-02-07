@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
-  res.sendFile("/Users/brianhon/github/Projects/radius/build/index.html")
+  res.sendFile("/Users/woojaepark/Desktop/radius/src/client/index.html")
 });
 
 app.use(express.static('build'))
@@ -28,7 +28,7 @@ app.post("/jobs", (req, res) => {
   fetch(url)
     .then(res => res.json())
     .then(json => {
-      // console.log("-------------------JSON From the Server---------------------", json)  
+      // console.log("-------------------JSON From the Server---------------------", json)
       res.send(json)
     });
 

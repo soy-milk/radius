@@ -1,63 +1,60 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 // import styles from '../styling/app.css';
-import JobDisplay from './JobDisplay';
+import MapContainer from './GMap'
 
 class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            city: "",
-            jobObj: null
+            city: null,
+            jobObj: null,
+            lat: null,
+            lng: null,
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.makeFetch = this.makeFetch.bind(this);
     }
 
     handleChange(event) {
         console.log("EVENT", event.target.value)
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({ city: event.target.value });
     }
 
-    handleSubmit(event) {
-        this.setState(prevState => ({
-            city: ""
-        }))
+    async makeFetch(event) {
         event.preventDefault();
-    }
-
-    makeFetch(event) {
-        console.log("MAKE FETCH LINE 28", this.state.city)
-
-            fetch("http://localhost:4242/jobs", {
-              method: 'POST', 
-              body: JSON.stringify({ strings: this.state.city }),
-              headers: {
+        let jobs = await fetch("http://localhost:4242/jobs", {
+            method: 'POST',
+            body: JSON.stringify({ strings: this.state.city }),
+            headers: {
                 'Content-Type': 'application/json'
-              }
-            }).then(res => {
-                return res.json();
-            })
-              .then(json => {
-                  console.log("JSON OBJECTTTT", json)
-                  this.setState({"jobObj": json})
-                });
+            }
+        })
+        let jobsJSON = await jobs.json();
+        console.log("--------jobsJSON-----", jobsJSON)
+        let geoTarg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.city}&key=AIzaSyAHiN7rsT9iRbCMD0WZpvsKekT8riDnYp0`)
+        let geoJSON = await geoTarg.json();
+        let lat = geoJSON.results[0].geometry.location.lat;
+        let lng = geoJSON.results[0].geometry.location.lng;
 
-
-        event.preventDefault();
+        this.setState({
+            jobObj: jobsJSON,
+            lat: lat,
+            lng: lng
+        })
     }
+
 
     render() {
         return (
-            <div id="map">
+            <div>
                 <h2>Submit your city: </h2>
                 <form>
-                <input id= "jobs" type="text" name="city" onChange={this.handleChange} value={this.state.city}/>
-                <input type="submit" value="Submit" onClick = {this.makeFetch}/>
-                </form> 
+                    <input id="jobs" type="text" name="city" onChange={this.handleChange} value={this.state.city} />
+                    <input type="submit" value="Submit" onClick={this.makeFetch} />
+                </form>
                 <h1>MAP COMPONENT</h1>
-                <JobDisplay jobObj = {this.state.jobObj} />
+                <MapContainer lat={this.state.lat} lng={this.state.lng} jobObj={this.state.jobObj} />
             </div>
         )
     }
