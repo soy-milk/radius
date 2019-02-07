@@ -27,6 +27,17 @@ module.exports = {
                     modules: true,
                     localIdentName: '[name]__[local]___[hash:base64:5]'
                 }
+            },
+            {
+                test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 25000
+                        }
+                    }
+                ]
             }
         ]
     },

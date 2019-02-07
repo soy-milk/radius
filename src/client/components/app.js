@@ -4,6 +4,7 @@ import styles from '../styling/app.css';
 import Map from './map';
 import Login from './login';
 import { resolve } from 'path';
+const logo = require('../../../images/radiuslogo.png');
 
 class App extends Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class App extends Component {
         return (
             <div id="main" className={styles.login}>
                 <h1>RADIUS</h1>
+                <h1 align="center"><img src={logo} width="15%" height="20%" align="center"/></h1>
                 <h2>Login: </h2>
                 <Login username={this.state.username} password={this.state.password} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} />
                 <hr></hr>
