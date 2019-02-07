@@ -1,5 +1,4 @@
 const { Client } = require('pg')
-const db = {}
 const client = new Client({
   user: 'wjp241',
   host: "clarali.cdow3ddrorlw.us-east-2.rds.amazonaws.com",
@@ -8,10 +7,12 @@ const client = new Client({
   port: 5432,
 })
 
-db.connect = async function db() {
-  await client.connect()
+client.connect(err => {
+  if (err) throw err;
   console.log("-------------connected--------------")
-  await client.end()
-}
+})
 
-module.exports = db;
+module.exports = client;
+
+
+//psql -h clarali.cdow3ddrorlw.us-east-2.rds.amazonaws.com -U wjp241 --port 5432 -d wjp241 --password 12345678

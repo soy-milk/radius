@@ -15,9 +15,10 @@ class App extends Component {
         this.handleFormSubmit = this.handleFormSubmit.bind(this)
         this.handleFormChange = this.handleFormChange.bind(this)
         this.handleGet = this.handleGet.bind(this)
+        this.handleSignup = this.handleSignup.bind(this)
     }
     handleGet() {
-        fetch('http://localhost:4242', {
+        fetch('http://localhost:4242/jwttest', {
             method: 'GET',
             type: 'cors',
             headers: {
@@ -27,11 +28,33 @@ class App extends Component {
             .then(res => res.json())
             .then(res => console.log(res))
     }
+    handleSignup(e) {
+        e.preventDefault()
+        console.log("handlesignup")
+        fetch('http://localhost:4242/signup', {
+            method: 'POST',
+            type: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            }),
+        })
+            .then(res => res.json())
+            .then(res => console.log(res));
+        this.setState({
+            username: "",
+            password: ""
+        })
+    }
 
     handleFormSubmit(e) {
         e.preventDefault()
         fetch('http://localhost:4242/login', {
             method: 'POST',
+            type: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -62,7 +85,7 @@ class App extends Component {
                 <h1>RADIUS</h1>
                 <button onClick={this.handleGet}>Hola</button>
                 <h2>Login: </h2>
-                <Login username={this.state.username} password={this.state.password} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} />
+                <Login username={this.state.username} password={this.state.password} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} handleSignup={this.handleSignup} />
                 <hr></hr>
                 <div>
                     <Map />

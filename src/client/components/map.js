@@ -17,7 +17,7 @@ class Map extends Component {
 
     handleChange(event) {
         console.log("EVENT", event.target.value)
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     handleSubmit(event) {
@@ -30,19 +30,17 @@ class Map extends Component {
     makeFetch(event) {
         console.log("MAKE FETCH LINE 28", this.state.city)
 
-            fetch("http://localhost:4242/jobs", {
-              method: 'POST', 
-              body: JSON.stringify({ strings: this.state.city }),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            }).then(res => {
-                return res.json();
-            })
-              .then(json => {
-                  console.log("JSON OBJECTTTT", json)
-                  this.setState({"jobObj": json})
-                });
+        fetch("http://localhost:4242/jobs", {
+            method: 'POST',
+            body: JSON.stringify({ strings: this.state.city }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(res => res.json())
+            .then(json => {
+                console.log("JSON OBJECTTTT", json)
+                this.setState({ "jobObj": json })
+            });
 
 
         event.preventDefault();
@@ -53,11 +51,11 @@ class Map extends Component {
             <div id="map">
                 <h2>Submit your city: </h2>
                 <form>
-                <input id= "jobs" type="text" name="city" onChange={this.handleChange} value={this.state.city}/>
-                <input type="submit" value="Submit" onClick = {this.makeFetch}/>
-                </form> 
+                    <input id="jobs" type="text" name="city" onChange={this.handleChange} value={this.state.city} />
+                    <input type="submit" value="Submit" onClick={this.makeFetch} />
+                </form>
                 <h1>MAP COMPONENT</h1>
-                <JobDisplay jobObj = {this.state.jobObj} />
+                <JobDisplay jobObj={this.state.jobObj} />
             </div>
         )
     }

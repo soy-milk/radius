@@ -1,19 +1,76 @@
 const jwt = require('jsonwebtoken');
-const config = require('./config.js')
+const config = require('./config.js');
+const client = require("./database");
+const bcrypt = require('bcrypt');
 
 
 module.exports = {
 
-  verifyLogin(req, res, next) {
-    let username = req.body.username;
-    let password = req.body.password;
-    let token = jwt.sign({ username: username }, config.secret, { expiresIn: '24h' })
-    res.cookie('token', token)
-    res.send({ 'good': 'dude' })
-
-    next()
+  createUser(req, res, next) {
+    let { username, password } = req.body;
+    console.log("creating user", username, password)
+    let query = 'SELECT * FROM users WHERE username=$1;';
+    client.query(query, [username], (err, result) => {
+      if (result.rowCount) {
+        res.json({
+          success: false,
+          message: 'User already exists'
+        })
+      } else {
+        bcrypt.hash(`${password}`, 3, (err, hash) => {
+          let insert = 'INSERT INTO users (username, password) VALUES ($1, $2);';
+          client.query(insert, [username, hash])
+        })
+        res.json({
+          sucess: true,
+          message: 'welcome to the club'
+        })
+      }
+    })
   },
-  checkJwt(req, res, next) {
+
+  verifyLogin(req, res, next) {
+    let { username, password } = req.body;
+    console.log("username", username, password)
+    let find = 'SELECT * FROM users WHERE username=$1;';
+
+    client.query(find, [username], (err, result) => {
+      console.log("verify login result", result)
+      if (result.rowCount) {
+        let bcryptPass = result.rows[0].password
+        bcrypt.compare(`${password}`, bcryptPass, (err, result) => {
+          console.log("bcrypt password", result)
+          if (result) {
+            next()
+          } else {
+            res.json({
+              success: false,
+              message: "Incorrect Password"
+            })
+          }
+        })
+      } else {
+        res.json({
+          success: false,
+          message: "Incorrect Username"
+        })
+
+      }
+    })
+
+  },
+
+  sendJWT(req, res, next) {
+    let { username, password } = req.body;
+    let token = jwt.sign({ username: username }, config.secret, { expiresIn: '24h' })
+    res.cookie('token', token, { secure: false, httpOnly: false, expires: new Date(Date.now() + 9999999) }).json({
+      success: true,
+      message: "Token Recieved"
+    })
+  },
+
+  checkJWT(req, res, next) {
+    console.log("these cookies tho", req.cookies)
     const token = req.cookies.token;
 
     if (token) {
@@ -31,7 +88,6 @@ module.exports = {
         } else {
           req.decoded = decoded;
           console.log(decoded)
-          res.locals
           next();
         }
       });
@@ -41,12 +97,7 @@ module.exports = {
         message: 'Auth token is not supplied'
       });
     }
-    next()
   }
-
-
-
-
 
 
 }

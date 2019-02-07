@@ -1,20 +1,27 @@
 const express = require('express');
 const app = express();
+const path = require('path')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-const { checkJwt, verifyLogin } = require('./middleware.js')
-const db = require("./database");
+const { checkJWT, verifyLogin, sendJWT, createUser } = require('./middleware.js')
+const client = require("./database");
 const fetch = require('node-fetch');
 
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
-  res.sendFile("/Users/brianhon/github/Projects/radius/build/index.html")
-});
-
+app.use(cookieParser());
+app.use(cors());
+app.use(express.json());
 app.use(express.static('build'))
+app.use(express.static(path.join(__dirname, "./src/client")))
+
+app.get("/", (req, res) => {
+  res.sendFile("./index.html")
+})
+
 
 app.post("/jobs", (req, res) => {
+  console.log("req.body", req.body)
   function urlStr(str) {
     var newStr = "";
     var a = str.split(" ");
@@ -32,16 +39,14 @@ app.post("/jobs", (req, res) => {
     .then(json => {
       // console.log("-------------------JSON From the Server---------------------", json)  
       res.send(json)
+    }).catch(err => {
+      throw (err)
     });
-
 })
 
-app.use(cookieParser());
-app.use(cors())
-app.use(express.json())
-
-app.post('/login', verifyLogin)
-app.get('/', checkJwt, (req, res) => {
+app.post('/login', verifyLogin, sendJWT)
+app.post('/signup', createUser)
+app.get('/jwttest', checkJWT, (req, res) => {
   res.send({ "ok": "all good" })
 })
 // change console.log before IPO
