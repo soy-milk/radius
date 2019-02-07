@@ -32,7 +32,6 @@ class App extends Component {
         e.preventDefault()
         fetch('http://localhost:4242/login', {
             method: 'POST',
-            type: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -65,8 +64,7 @@ class App extends Component {
                 <h2>Login: </h2>
                 <Login username={this.state.username} password={this.state.password} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} />
                 <hr></hr>
-                <h2>Jobs Near You Right Now: </h2>
-                <div id="map">
+                <div>
                     <Map />
                 </div>
             </div>
