@@ -30,7 +30,6 @@ class App extends Component {
     }
     handleSignup(e) {
         e.preventDefault()
-        console.log("handlesignup")
         fetch('http://localhost:4242/signup', {
             method: 'POST',
             type: 'cors',

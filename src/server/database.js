@@ -9,7 +9,7 @@ const client = new Client({
 
 client.connect(err => {
   if (err) throw err;
-  console.log("-------------connected--------------")
+  console.log("-------------connected to PG--------------")
 })
 
 module.exports = client;

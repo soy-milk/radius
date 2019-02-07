@@ -8,7 +8,6 @@ module.exports = {
 
   createUser(req, res, next) {
     let { username, password } = req.body;
-    console.log("creating user", username, password)
     let query = 'SELECT * FROM users WHERE username=$1;';
     client.query(query, [username], (err, result) => {
       if (result.rowCount) {
@@ -31,11 +30,9 @@ module.exports = {
 
   verifyLogin(req, res, next) {
     let { username, password } = req.body;
-    console.log("username", username, password)
     let find = 'SELECT * FROM users WHERE username=$1;';
 
     client.query(find, [username], (err, result) => {
-      console.log("verify login result", result)
       if (result.rowCount) {
         let bcryptPass = result.rows[0].password
         bcrypt.compare(`${password}`, bcryptPass, (err, result) => {
@@ -87,7 +84,6 @@ module.exports = {
           });
         } else {
           req.decoded = decoded;
-          console.log(decoded)
           next();
         }
       });

@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
 
 
 app.post("/jobs", (req, res) => {
-  console.log("req.body", req.body)
   function urlStr(str) {
     var newStr = "";
     var a = str.split(" ");
@@ -32,12 +31,10 @@ app.post("/jobs", (req, res) => {
   }
   let loc = urlStr(req.body.strings)
   let url = `https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=${loc}`
-  console.log(url)
 
   fetch(url)
     .then(res => res.json())
     .then(json => {
-      // console.log("-------------------JSON From the Server---------------------", json)  
       res.send(json)
     }).catch(err => {
       throw (err)
@@ -49,5 +46,4 @@ app.post('/signup', createUser)
 app.get('/jwttest', checkJWT, (req, res) => {
   res.send({ "ok": "all good" })
 })
-// change console.log before IPO
-app.listen(4242, () => console.log('radius is LIVE on 4242 BETCHES!'))
+app.listen(4242, () => console.log('radius is LIVE on 4242!'))
