@@ -14,6 +14,7 @@ class Login extends Component {
           <label>Password: </label>
           <input type="text" name="password" value={this.props.password} onChange={this.props.handleFormChange} />
           <input type="submit" value="Submit" />
+          <input type="button" value="Sign Up" onClick={this.props.handleSignup} />
         </form>
       </div>
 

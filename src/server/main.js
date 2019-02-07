@@ -1,17 +1,24 @@
 const express = require('express');
 const app = express();
+const path = require('path')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
-const db = require("./database");
+const cors = require('cors')
+const { checkJWT, verifyLogin, sendJWT, createUser } = require('./middleware.js')
+const client = require("./database");
 const fetch = require('node-fetch');
-const path = require ('path');
 
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/index.html"))
-});
-
+app.use(cookieParser());
+app.use(cors());
+app.use(express.json());
 app.use(express.static('build'))
+app.use(express.static(path.join(__dirname, "./src/client")))
+
+app.get("/", (req, res) => {
+  res.sendFile("./index.html")
+})
+
 
 app.post("/jobs", (req, res) => {
   function urlStr(str) {
@@ -24,23 +31,19 @@ app.post("/jobs", (req, res) => {
   }
   let loc = urlStr(req.body.strings)
   let url = `https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=${loc}`
-  console.log(url)
 
   fetch(url)
     .then(res => res.json())
     .then(json => {
-      // console.log("-------------------JSON From the Server---------------------", json)
       res.send(json)
+    }).catch(err => {
+      throw (err)
     });
-
 })
 
-app.use(cookieParser());
-
-app.post('/login', (req, res) => {
-  console.log(req.body)
-  res.send({ "hello": "boss" })
+app.post('/login', verifyLogin, sendJWT)
+app.post('/signup', createUser)
+app.get('/jwttest', checkJWT, (req, res) => {
+  res.send({ "ok": "all good" })
 })
-
-// change console.log before IPO
-app.listen(4242, () => console.log('radius is LIVE on 4242 BETCHES!'))
+app.listen(4242, () => console.log('radius is LIVE on 4242!'))

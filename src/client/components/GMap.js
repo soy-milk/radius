@@ -18,7 +18,6 @@ export class MapContainer extends Component {
 
   }
   onMarkerClick(props, marker, e) {
-    console.log("marker clickedas;ldkfjasl;kdfj");
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -36,7 +35,6 @@ export class MapContainer extends Component {
 
 
   render() {
-    console.log("---------------MapContainer----------------", this.props)
     return (
       <Map
         google={this.props.google}

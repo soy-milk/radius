@@ -17,7 +17,6 @@ class Map extends Component {
     }
 
     handleChange(event) {
-        console.log("EVENT", event.target.value)
         this.setState({ city: event.target.value });
     }
 
@@ -31,7 +30,6 @@ class Map extends Component {
             }
         })
         let jobsJSON = await jobs.json();
-        console.log("--------jobsJSON-----", jobsJSON)
         let geoTarg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.city}&key=AIzaSyAHiN7rsT9iRbCMD0WZpvsKekT8riDnYp0`)
         let geoJSON = await geoTarg.json();
         let lat = geoJSON.results[0].geometry.location.lat;
